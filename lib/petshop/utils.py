@@ -1,9 +1,12 @@
+import allure
 import requests
 import json
 from random import randint
 
 
 class PetShopMethods:
+    def __init__(self):
+        pass
     URL = 'https://petstore.swagger.io/v2/pet/'
 
     # @JsonWriter.write_to_file

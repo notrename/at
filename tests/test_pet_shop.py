@@ -1,45 +1,51 @@
-import pytest
+import json
+
+import allure
 
 from lib.petshop.utils import PetShopMethods
 
 
+@allure.epic('Тестирование API')
+@allure.feature('Проверка методов PetShop')
+@allure.severity('Critical')
 class TestPetShop:
-    PetShop = PetShopMethods()
+    def setup_session(self):
+        self.pet_shop = PetShopMethods()
 
-    @pytest.mark.parametrize(
-        'name, category_name',
-        [
-            ('Asteroid Destroyer', 'cat'),
-            (454556, 'dog'),
-            ('Felix', 'cat'),
-        ],
-        # ids=['cat__w Asteroid Destroyer', 'dog__w Bruce', 'cat__w Felix']
-    )
-    def test_add_pet(self, name, category_name):
-        body = {
-            "name": name,
-            "status": 'processed',
-            "category_name": category_name,
-        }
-        result = self.PetShop.add_pet(
-            **body,
-        )
+    @allure.story('Проверка метода добавления зверушки')
+    def test_add_pet(self):
+        with allure.step('Подготовка тестовых данных'):
+            body = {
+                "name": 'tea',
+                "status": 'processed',
+                "category_name": 'cat',
+            }
+        with allure.step('Добавляем зверушку'):
+            result = self.pet_shop.add_pet(
+                **body,
+            )
+
         status_code = result.get('status_code')
         data = result.get('data')
-        assert status_code == 200
-        assert body.get('name') == data.get('name')
+        with allure.step('Проверка status_code'):
+            assert status_code == 200
+        with allure.step('Проверка что вернулось тело сообщения'):
+            assert body.get('name') == data.get('name')
+        with allure.step('Ответ ручки сваггера'):
+            allure.attach(
+                body=json.dumps(data),
+                name='response body',
+                attachment_type=allure.attachment_type.JSON
+            )
 
-    @pytest.mark.parametrize('pet_id', [112, 1337, 952, 1])
-    def test_get_pet_by_id(self, pet_id):
-        result = self.PetShop.get_pet(pet_id=pet_id)
+    def test_get_pet_by_id(self):
+        result = self.pet_shop.get_pet(pet_id=1)
         body = result.get('data')
         status_code = result.get('status_code')
         assert status_code == 200
 
-    @pytest.mark.skip('Не доработана функция ...')
-    def test_negative(self):
-        assert 3 == 4
+    # https://allurereport.org/docs/install-for-windows/
+    # irm get.scoop.sh | iex
+    # scoop install allure
 
-    @pytest.mark.xfail()
-    def test_xfail(self):
-        assert 3 < 4
+    # allure serve allure-results

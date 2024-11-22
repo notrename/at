@@ -7,7 +7,7 @@ class Binance:
     URL = 'https://api.binance.com/api/v3'
 
     def get_price(self, symbol: str) -> dict[str, Any]:
-        url = f'{self.URL}/ticker/price'
+        url = f'{self.URL}/ticker'
         response = requests.get(url=url, params={'symbol': f'{symbol.upper()}USDT'})
         return response.json()
 
