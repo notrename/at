@@ -27,4 +27,4 @@ jobs:
 
     - name: Run tests
       run: |
-        pytest tests/ --tb=short --log-cli-level=INFO --log-file=chrome_log.txt
+        pytest tests/
