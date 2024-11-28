@@ -1,6 +1,7 @@
 import json
 
 import allure
+import pytest
 
 from lib.petshop.utils import PetShopMethods
 
@@ -9,7 +10,8 @@ from lib.petshop.utils import PetShopMethods
 @allure.feature('Проверка методов PetShop')
 @allure.severity('Critical')
 class TestPetShop:
-    def setup_session(self):
+    @pytest.fixture(scope='function', autouse=True)
+    def setup(self):
         self.pet_shop = PetShopMethods()
 
     @allure.story('Проверка метода добавления зверушки')

@@ -1,0 +1,26 @@
+name: Tests
+on: [push]
+
+jobs:
+  selenium:
+    runs-on: ubuntu-latest
+    services:
+      chrome:
+        image: selenium/standalone-chrome
+        ports:
+          - 4444
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Set up Python
+        uses: actions/setup-python@v2
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+
+      - name: Run Tests
+        run: |
+          pytest tests/
