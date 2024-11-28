@@ -12,5 +12,4 @@ class TestGostTeam:
     def test_main_page(self):
         self.page.open()
         self.page.xpath_is_present(xpath='//title')
-        self.page.switch_to_eng()
       
