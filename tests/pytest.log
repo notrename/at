@@ -3,3 +3,4 @@ INFO     pageLogger:page.py:24 Попытка открыть сайт: https://g
 INFO     pageLogger:page.py:35 Сайт https://gost.team/ открылся
 INFO     pageLogger:page.py:38 Попытка найти элемент по xpath'y: //title
 INFO     pageLogger:page.py:41 Элемент успешно найден
+s
